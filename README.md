@@ -4,6 +4,9 @@ This is my solution to PlanetSide2's lack of session based accuracy. It works by
 
 
 Python 3.6.7
+Flask 1.0.2
+
+
 pip list
 Click (7.0)
 Flask (1.0.2)
