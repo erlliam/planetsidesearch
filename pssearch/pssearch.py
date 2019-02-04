@@ -4,7 +4,6 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     if 'user' in request.args: 
-        print(request.args['user'])
         return render_template('index.html', user=request.args['user'])
 
     return render_template('index.html')
