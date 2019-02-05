@@ -1,9 +1,13 @@
-<h1>PSEARCH</h1>
+<h1>PLANETSIDE SEARCH</h1>
 
 <form>
 User: <input type='text' name='user'>
 </form>
 
 {% if user %}
-	<h1>{{ user }}<h1>
+	<h1>User: {{ user }}<h1>
+	<h1>Character ID: {{ character_id }}</h1>
+{% endif %}
+{% if status == 'usernotfound' %}
+	<h1>ERROR USER NOT FOUND</h1>
 {% endif %}
