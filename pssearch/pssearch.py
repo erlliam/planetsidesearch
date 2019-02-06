@@ -26,7 +26,6 @@ def index():
     if 'user' in request.args:
         character_results = get_character(request.args['user'])
         if character_results:
-            get_weapon_accuracy(character_results[1], 80)
             user = character_results[0]
             character_id = character_results[1]
             acc = get_weapon_accuracy(character_id, 80)
