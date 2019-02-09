@@ -1,8 +1,9 @@
 import json
 import pickle
 import urllib.request
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 app = Flask(__name__)
+app.secret_key = 'hack'
 
 items = open("pssearch/guns.pickle", "rb")
 item_names = pickle.load(items)
@@ -32,7 +33,7 @@ def get_weapon_accuracy(character_id, item_id):
     return weapon_result
 
 def get_all_weapon_accuracy(name):
-    all_wep_stats = "http://census.daybreakgames.com/get/ps2/characters_weapon_stat/?character_id={}&stat_name=weapon_fire_count,weapon_hit_count&vehicle_id=0&c:show=stat_name,item_id,value&c:limit=500".format(name.lower())
+    all_wep_stats = "http://census.daybreakgames.com/s:supafarma/get/ps2/characters_weapon_stat/?character_id={}&stat_name=weapon_fire_count,weapon_hit_count&vehicle_id=0&c:show=stat_name,item_id,value&c:limit=500".format(name.lower())
     all_wep_res = json.loads(urllib.request.urlopen(all_wep_stats).read())
     all_wep_res = all_wep_res['characters_weapon_stat_list']
     all_gun_acc = {}
@@ -42,22 +43,30 @@ def get_all_weapon_accuracy(name):
         else:
             if value['item_id'] in all_gun_acc:
                 all_gun_acc[value['item_id']].append(value['value'])
-    xd = {}
+    thing_to_return = {}
     for key, value in all_gun_acc.items():
         if len(value) == 2:
-            xd[get_name_from_id(key)] = int(value[1])/int(value[0])
+            thing_to_return[get_name_from_id(key)] = (int(value[1]), int(value[0]))
             
-    return xd
+    return thing_to_return
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
     if 'user' in request.args:
         character_results = get_character(request.args['user'])
         if character_results:
             user, character_id = character_results
-            get_all_weapon_accuracy(character_id)
+            if 'start' in request.form:
+                session['start_acc'] = get_all_weapon_accuracy(character_id)
+            elif 'end' in request.form:
+                session['end_acc'] = get_all_weapon_accuracy(character_id)
+                for key in session['end_acc']:
+                    if session['start_acc'][key][1] != session['end_acc'][key][1]:
+                        print('{} has changed'.format(key))
             return render_template('index.html', user=user, character_id=character_id, gun_names=get_all_weapon_accuracy(character_id))
         else:
             return render_template('index.html', status="usernotfound")
+    session.clear()
     return render_template('index.html', gun_names=item_names)
+
 

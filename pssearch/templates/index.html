@@ -1,8 +1,18 @@
 <h1><a href="/">PLANETSIDE SEARCH</a></h1>
 
 <form>
-User: <input type='text' name='user'>
+	User: <input type='text' name='user'>
 </form>
+{% if user %}
+	<form method='post'>
+		<input type='submit' name='start' value='start'>
+		{% if 'start_acc' in session %}
+			<input type='submit' name='end' value='end'>
+		{% endif %}
+			
+	</form>
+{% endif %}
+
 
 {% if user %}
 	<h1>User: {{ user }}<h1>
@@ -12,9 +22,3 @@ User: <input type='text' name='user'>
 {% if status == 'usernotfound' %}
 	<h1>ERROR USER NOT FOUND</h1>
 {% endif %}
-{% if gun_names %}
-	{% for key, value in gun_names.items() %}
-	<p>{{ key }} {{ value }}</p>	
-	{% endfor %}
-{% endif %}
-
