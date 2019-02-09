@@ -1,7 +1,13 @@
 import json
+import os
+import pickle
 import urllib.request
 from flask import Flask, render_template, request
 app = Flask(__name__)
+
+items = open("pssearch/guns.pickle", "rb")
+item_names = pickle.load(items)
+items.close()
 
 def get_character(name):
     character_id_url = "http://census.daybreakgames.com/s:supafarma/get/ps2/character/?name.first_lower={}".format(name.lower())
@@ -21,16 +27,21 @@ def get_weapon_accuracy(character_id, item_id):
     weapon_result = int(weapon_result['characters_weapon_stat_list'][0]['value']) / int(weapon_result['characters_weapon_stat_list'][1]['value'])
     return weapon_result
 
+def test(name):
+    all_wep_stats = "http://census.daybreakgames.com/get/ps2/characters_weapon_stat/?character_id={}&stat_name=weapon_fire_count,weapon_hit_count&vehicle_id=0&c:show=stat_name,item_id,value,last_save_date&c:limit=8000".format(name.lower())
+    all_wep_res = json.loads(urllib.request.urlopen(all_wep_stats).read())
+    print(all_wep_res)
+
 @app.route('/')
 def index():
     if 'user' in request.args:
         character_results = get_character(request.args['user'])
         if character_results:
-            user = character_results[0]
-            character_id = character_results[1]
-            acc = get_weapon_accuracy(character_id, 80)
-            return render_template('index.html', user=user, character_id=character_id, acc=acc)
+            user, character_id = character_results
+            test(character_id)
+            print(os.getcwd())
+            return render_template('index.html', user=user, character_id=character_id)
         else:
             return render_template('index.html', status="usernotfound")
-    return render_template('index.html')
+    return render_template('index.html', gun_names=item_names)
 

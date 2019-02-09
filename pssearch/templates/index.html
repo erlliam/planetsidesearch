@@ -7,8 +7,14 @@ User: <input type='text' name='user'>
 {% if user %}
 	<h1>User: {{ user }}<h1>
 	<h1>Character ID: {{ character_id }}</h1>
-	<h1>Orion Accuracy: {{ acc }}</h1>
+
 {% endif %}
 {% if status == 'usernotfound' %}
 	<h1>ERROR USER NOT FOUND</h1>
 {% endif %}
+{% if gun_names %}
+	{% for key, value in gun_names.items() %}
+	<p>{{ key }} {{ value }}</p>	
+	{% endfor %}
+{% endif %}
+
