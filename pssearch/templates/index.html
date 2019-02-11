@@ -7,6 +7,11 @@
 {% if user %}
 	<h1>User: {{ user }}<h1>
 	<h1>Character ID: {{ char_id }}</h1>
+	<ul>
+		{% for key, value in wep_list.items() %}
+		<li>{{ value[0] }}: {{ value[2]|int / value[1]|int }}</li>
+		{% endfor %}
+	</ul>
 {% elif status == 'usernotfound' %}
 	<h1>ERROR USER NOT FOUND</h1>
 {% endif %}

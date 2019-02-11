@@ -1,21 +1,6 @@
-import json
-import pickle
-import urllib.request
+import urllib.request, json
 from flask import Flask, render_template, request
 app = Flask(__name__)
-
-items = open("pssearch/guns.pickle", "rb")
-item_names = pickle.load(items)
-items.close()
-
-def item_name(item_id):
-
-    pass
-
-def get_name_from_id(item_id):
-    if item_id in item_names:
-        return item_names[item_id]
-    return "notinlist"
 
 def get_weapon_accuracy(character_id, item_id):
     weapon_url = "http://census.daybreakgames.com/s:supafarma/get/ps2/characters_weapon_stat/?character_id={}&item_id={}&stat_name=weapon_fire_count,weapon_hit_count&c:limit=2&c:show=value".format(character_id, item_id)
@@ -68,7 +53,9 @@ def index():
         char_res = search_character(request.args['user'])
         if char_res:
             char_id, user= char_res
-            return render_template('index.html', user=user, char_id=char_id)
+            wep_list = get_all_wep_acc(char_id)
+            print(wep_list)
+            return render_template('index.html', user=user, char_id=char_id, wep_list=wep_list)
         else:
             return render_template('index.html', status="usernotfound")
     return render_template('index.html', gun_names=item_names)
