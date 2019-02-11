@@ -8,6 +8,10 @@ items = open("pssearch/guns.pickle", "rb")
 item_names = pickle.load(items)
 items.close()
 
+def item_name(item_id):
+
+    pass
+
 def get_name_from_id(item_id):
     if item_id in item_names:
         return item_names[item_id]
@@ -42,18 +46,20 @@ def search_id(char_id):
         char_json = json_res['character_list'][0]
         return char_json['character_id'], char_json['name']['first']
 
-def get_all_weapon_accuracy(char_id):
-    url = "http://census.daybreakgames.com/s:supafarma/get/ps2/characters_weapon_stat/?character_id={}&stat_name=weapon_fire_count,weapon_hit_count&vehicle_id=0&c:show=stat_name,item_id,value&c:limit=500".format(char_id)
+def get_all_wep_acc(char_id):
+    url = "http://census.daybreakgames.com/s:supafarma/get/ps2/characters_weapon_stat/?character_id={}&stat_name=weapon_fire_count,weapon_hit_count&vehicle_id=0&c:show=stat_name,item_id,value&c:limit=500&c:join=item^show:name.en".format(char_id)
     json_res = url_json(url)
     if json_res:
         wep_json = json_res['characters_weapon_stat_list']
         wep_dict = {}
         for wep in wep_json:
-            wep_list = wep_dict[wep['item_id']] = []
-            if wep['stat_name'] == 'weapon_hit_count':
-                wep_list[0] = wep['vaue']
-            elif wep['stat_name'] == 'weapon_fire_count':
-                wep_list[1] = wep['value']
+            item_id = wep['item_id']
+            if not item_id in wep_dict:
+                wep_dict[item_id] = [wep['item_id_join_item']['name']['en']]
+            wep_dict[item_id].append(wep['value'])
+        for key, value in list(wep_dict.items()):
+            if len(value) != 3:
+                del wep_dict[key]
         return wep_dict
 
 @app.route('/', methods=['GET', 'POST'])
