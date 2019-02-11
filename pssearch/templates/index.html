@@ -3,22 +3,11 @@
 <form>
 	User: <input type='text' name='user'>
 </form>
-{% if user %}
-	<form method='post'>
-		<input type='submit' name='start' value='start'>
-		{% if 'start_acc' in session %}
-			<input type='submit' name='end' value='end'>
-		{% endif %}
-			
-	</form>
-{% endif %}
-
 
 {% if user %}
 	<h1>User: {{ user }}<h1>
-	<h1>Character ID: {{ character_id }}</h1>
-
-{% endif %}
-{% if status == 'usernotfound' %}
+	<h1>Character ID: {{ char_id }}</h1>
+{% elif status == 'usernotfound' %}
 	<h1>ERROR USER NOT FOUND</h1>
 {% endif %}
+
