@@ -1,18 +1,21 @@
-<h1><a href="/">PLANETSIDE SEARCH</a></h1>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}">
 
-<form>
+<h1 id="title"><a href="/">PLANETSIDE SEARCH</a></h1>
+
+<form id="search">
 	User: <input type='text' name='user'>
 </form>
 
 {% if user %}
-	<h1>User: {{ user }}<h1>
-	<h1>Character ID: {{ char_id }}</h1>
-	<ul>
+	<h1 class="search-results">User: {{ user }}</h1>
+	<h1 class="search-results">Character ID: {{ char_id }}</h1>
+	<ul class="search-list">
 		{% for key, value in wep_list.items() %}
-		<li>{{ value[0] }}: {{ value[2]|int / value[1]|int }}</li>
+		<li><p>{{ value[0] }}: {{ value[2]|int / value[1]|int }}</p></li>
+
 		{% endfor %}
 	</ul>
 {% elif status == 'usernotfound' %}
-	<h1>ERROR USER NOT FOUND</h1>
+	<h1 class="error">ERROR USER NOT FOUND</h1>
 {% endif %}
 

@@ -1,0 +1,47 @@
+* {
+	padding: 0;
+	margin: 0;
+	font-family: Arial;
+}
+
+#title {
+	text-align: center;
+}
+
+#title a{
+	text-decoration: none;
+	color: black;
+}
+
+#search {
+	text-align: center;
+}
+
+.search-results {
+	font-size: 24px;
+	font-weight: normal;
+	text-decoration: none;
+	display: inline;
+	margin: 0 0 0 50px;
+}
+
+
+.search-list {
+	font-size: 20px;
+	text-align: left;
+	list-style-type: none;
+}
+
+.search-list li {
+	padding: 5px 0 0 0;
+}
+
+.search-list li p{
+	border: 2px solid black;
+	display: inline-block;
+
+}
+
+.error {
+
+}

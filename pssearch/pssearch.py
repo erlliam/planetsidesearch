@@ -2,13 +2,6 @@ import urllib.request, json
 from flask import Flask, render_template, request
 app = Flask(__name__)
 
-def get_weapon_accuracy(character_id, item_id):
-    weapon_url = "http://census.daybreakgames.com/s:supafarma/get/ps2/characters_weapon_stat/?character_id={}&item_id={}&stat_name=weapon_fire_count,weapon_hit_count&c:limit=2&c:show=value".format(character_id, item_id)
-    weapon_result = urllib.request.urlopen(weapon_url).read()
-    weapon_result = json.loads(weapon_result)
-    weapon_result = int(weapon_result['characters_weapon_stat_list'][0]['value']) / int(weapon_result['characters_weapon_stat_list'][1]['value'])
-    return weapon_result
-
 def url_json(url):
     url_res = urllib.request.urlopen(url).read()
     json_res = json.loads(url_res)
@@ -54,8 +47,7 @@ def index():
         if char_res:
             char_id, user= char_res
             wep_list = get_all_wep_acc(char_id)
-            print(wep_list)
             return render_template('index.html', user=user, char_id=char_id, wep_list=wep_list)
         else:
             return render_template('index.html', status="usernotfound")
-    return render_template('index.html', gun_names=item_names)
+    return render_template('index.html')
