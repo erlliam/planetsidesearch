@@ -5,7 +5,7 @@
 }
 
 #title {
-	text-align: center;
+	display: inline-block;
 }
 
 #title a{
@@ -14,6 +14,7 @@
 }
 
 #search {
+	display: inline-block;
 	text-align: center;
 }
 
@@ -21,7 +22,7 @@
 	font-size: 24px;
 	font-weight: normal;
 	text-decoration: none;
-	display: inline;
+	display: block;
 	margin: 0 0 0 50px;
 }
 

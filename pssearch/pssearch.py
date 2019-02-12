@@ -2,6 +2,12 @@ import urllib.request, json
 from flask import Flask, render_template, request
 app = Flask(__name__)
 
+class Character:
+    def __init__(self, c_id, name, fac):
+        self.c_id = c_id
+        self.name = name
+        self.fac = fac
+
 def url_json(url):
     url_res = urllib.request.urlopen(url).read()
     json_res = json.loads(url_res)
@@ -11,19 +17,12 @@ def url_json(url):
         return False
 
 def search_character(name):
-    url = "http://census.daybreakgames.com/s:supafarma/get/ps2/character/?name.first_lower={}".format(name.lower())
+    url = "http://census.daybreakgames.com/s:supafarma/get/ps2/character/?name.first_lower={}&c:join=faction^show:code_tag".format(name.lower())
     json_res = url_json(url)
     if json_res:
         char_json = json_res['character_list'][0]
-        return char_json['character_id'], char_json['name']['first']
+        return Character(char_json['character_id'], char_json['name']['first'], char_json['faction_id_join_faction']['code_tag'])
     
-def search_id(char_id):
-    url = "http://census.daybreakgames.com/s:supafarma/get/ps2/character/?character_id={}".format(char_id)
-    json_res = url_json(url)
-    if json_res:
-        char_json = json_res['character_list'][0]
-        return char_json['character_id'], char_json['name']['first']
-
 def get_all_wep_acc(char_id):
     url = "http://census.daybreakgames.com/s:supafarma/get/ps2/characters_weapon_stat/?character_id={}&stat_name=weapon_fire_count,weapon_hit_count&vehicle_id=0&c:show=stat_name,item_id,value&c:limit=500&c:join=item^show:name.en".format(char_id)
     json_res = url_json(url)
@@ -40,14 +39,20 @@ def get_all_wep_acc(char_id):
                 del wep_dict[key]
         return wep_dict
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
+@app.route('/', methods=['GET'])
+def index_get():
     if 'user' in request.args:
         char_res = search_character(request.args['user'])
         if char_res:
-            char_id, user= char_res
-            wep_list = get_all_wep_acc(char_id)
-            return render_template('index.html', user=user, char_id=char_id, wep_list=wep_list)
+            char = char_res
+            wep_list = get_all_wep_acc(char.c_id)
+            return render_template('index.html', char=char, wep_list=wep_list)
         else:
             return render_template('index.html', status="usernotfound")
     return render_template('index.html')
+
+
+@app.route('/', methods=['POST'])
+def index_post():
+    print(request.form.get('user-login'))
+    print(request.form.get('password-login'))

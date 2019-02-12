@@ -6,9 +6,16 @@
 	User: <input type='text' name='user'>
 </form>
 
-{% if user %}
-	<h1 class="search-results">User: {{ user }}</h1>
-	<h1 class="search-results">Character ID: {{ char_id }}</h1>
+<form id="login" method="POST">
+	User: <input type="text" name="login-user">
+	Password: <input type="password" name="login-password">
+	<input type="submit">
+</form>
+
+{% if char %}
+	<h1 class="search-results">User: {{ char.name }}</h1>
+	<h1 class="search-results">Character ID: {{ char.c_id }}</h1>
+	<h1 class="search-results">Faction: {{ char.fac }}</h1>
 	<ul class="search-list">
 		{% for key, value in wep_list.items() %}
 		<li><p>{{ value[0] }}: {{ value[2]|int / value[1]|int }}</p></li>
