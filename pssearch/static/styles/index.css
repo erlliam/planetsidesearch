@@ -4,26 +4,51 @@
 	font-family: Arial;
 }
 
-#title {
+#top {
+	width: 100%;
+	text-align: center;
+	padding: 20px 0 20px 0;
+	border-width: 1px;
+	border-bottom-style: solid;
+
+}
+
+#top a {
+	text-decoration: none;
+	color: black;
+	height: 36px;
+	font-size: 32px;
+	font-weight: bold;
 	display: inline-block;
 }
 
-#title a{
-	text-decoration: none;
-	color: black;
+#top form {
+	height: 36px;
+	line-height: 36px;
+	vertical-align: top;
+	display: inline-block;
+	font-size: 18px;
+	margin-left: 46px;
+}
+
+#top form input[type="text"], [type="password"] {
+	width: 100px;
 }
 
 #search {
-	display: inline-block;
-	text-align: center;
+	font-size: 24px;
+	margin: 10px 0 10px 20px;
+	display: block;
 }
 
+
+
 .search-results {
-	font-size: 24px;
+	font-size: 20px;
 	font-weight: normal;
 	text-decoration: none;
-	display: block;
-	margin: 0 0 0 50px;
+	display: inline-block;
+	margin: 0 0 0 40px;
 }
 
 
@@ -34,7 +59,7 @@
 }
 
 .search-list li {
-	padding: 5px 0 0 0;
+	margin: 0px 0 0 0;
 }
 
 .search-list li p{
@@ -44,5 +69,5 @@
 }
 
 .error {
-
+	color: red;
 }

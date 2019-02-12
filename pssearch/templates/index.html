@@ -1,15 +1,18 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}">
 
-<h1 id="title"><a href="/">PLANETSIDE SEARCH</a></h1>
+<div id="top">
+	<a href="/">PLANETSIDE SEARCH</a>
+
+	<form>
+		<label for="user">User: </label><input type="text">
+		<label for="password">Password: </label><input type="password">
+		<input type="submit" value="Search">
+	</form>
+
+</div>
 
 <form id="search">
-	User: <input type='text' name='user'>
-</form>
-
-<form id="login" method="POST">
-	User: <input type="text" name="login-user">
-	Password: <input type="password" name="login-password">
-	<input type="submit">
+	Character Name: <input type='text' name='user'>
 </form>
 
 {% if char %}
