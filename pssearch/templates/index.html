@@ -11,21 +11,34 @@
 
 </div>
 
-<form id="search">
-	Character Name: <input type='text' name='user'>
-</form>
+<div id="middle">
+	<form id="search">
+		<label for="search">Character Name: </label><input type="text" name="user"
+		{% if char %}
+								 value="{{ char.name }}"
+		{% endif %}
+		>
+	</form>
+	{% if char %}
+	<div id="search-results">
+		<p>User: {{ char.name }}</p>
+		<p>Character ID: {{ char.c_id }}</p>
+		<p>Faction: {{ char.fac }}</p>
+	</div>
+	{% endif %}
+
+	{% if status %}
+		<p>{{ status }}</p>
+	{% endif %}
+
+</div>
 
 {% if char %}
-	<h1 class="search-results">User: {{ char.name }}</h1>
-	<h1 class="search-results">Character ID: {{ char.c_id }}</h1>
-	<h1 class="search-results">Faction: {{ char.fac }}</h1>
 	<ul class="search-list">
 		{% for key, value in wep_list.items() %}
 		<li><p>{{ value[0] }}: {{ value[2]|int / value[1]|int }}</p></li>
 
 		{% endfor %}
 	</ul>
-{% elif status == 'usernotfound' %}
-	<h1 class="error">ERROR USER NOT FOUND</h1>
 {% endif %}
 
