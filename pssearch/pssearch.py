@@ -1,5 +1,6 @@
-import urllib.request, json
+import urllib.request, json, sqlite3
 from flask import Flask, render_template, request, session, redirect, url_for
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = "a"
@@ -66,3 +67,17 @@ def index_post():
 def logout():
     session.clear()
     return redirect(request.referrer)
+
+@app.route('/signup', methods=['GET'])
+def signup_get():
+    return render_template('signup.html')
+
+@app.route('/signup', methods=['POST'])
+def signup_post():
+    connection = sqlite3.connect('pssearch/accounts.db')
+    cursor = connection.cursor()
+    cursor.execute("""INSERT INTO accounts ("username", "password") VALUES (?, ?)""", (request.form['user'], generate_password_hash(request.form['password'])))
+    connection.commit()
+    connection.close()
+    print(request.form)
+    return render_template('signup.html')
