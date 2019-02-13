@@ -39,11 +39,20 @@
 </div>
 
 {% if char %}
-	<ul class="search-list">
+<div id="search-list">
+	<table>
+		<tr>
+			<th>Weapon</th>
+			<th>Accuracy</th>
+		</tr>
 		{% for key, value in wep_list.items() %}
-		<li><p>{{ value[0] }}: {{ value[2]|int / value[1]|int }}</p></li>
-
+		<tr>
+			<td>{{ '{}'.format(value[0]) }}</td>
+			<td>{{ '{:0>7.3%}'.format(value[2]|int / value[1]|int) }}</td>
+		</tr>
 		{% endfor %}
-	</ul>
+
+	</table>
+</div>
 {% endif %}
 

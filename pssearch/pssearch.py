@@ -5,8 +5,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key = "a"
 
-
-
 class Character:
     def __init__(self, c_id, name, fac):
         self.c_id = c_id
