@@ -1,13 +1,17 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}">
 
 <div id="top">
-	<a href="/">PLANETSIDE SEARCH</a>
-
-	<form>
-		<label for="user">User: </label><input type="text">
-		<label for="password">Password: </label><input type="password">
+	<a id="title" href="/">PLANETSIDE SEARCH</a>
+	{% if not 'user' in session %}
+	<form method="post">
+		<label for="user">User: </label><input type="text" name="login-user">
+		<label for="password">Password: </label><input type="password" name="login-password">
 		<input type="submit" value="Search">
 	</form>
+	{% else %}
+	<p>{{ session['user'][0] }}</p>
+	<a href="/logout">Log out</a>
+	{% endif %}
 
 </div>
 

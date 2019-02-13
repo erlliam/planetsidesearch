@@ -1,6 +1,8 @@
 import urllib.request, json
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for
+
 app = Flask(__name__)
+app.secret_key = "a"
 
 class Character:
     def __init__(self, c_id, name, fac):
@@ -54,5 +56,11 @@ def index_get():
 
 @app.route('/', methods=['POST'])
 def index_post():
-    print(request.form.get('user-login'))
-    print(request.form.get('password-login'))
+    session.update(user = ((request.form.get('login-user')), request.form.get('login-password')))
+    return redirect(url_for('index_get'))
+
+# temp
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index_get'))
