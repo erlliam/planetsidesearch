@@ -5,6 +5,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key = "a"
 
+
+
 class Character:
     def __init__(self, c_id, name, fac):
         self.c_id = c_id
@@ -42,6 +44,27 @@ def get_all_wep_acc(char_id):
                 del wep_dict[key]
         return wep_dict
 
+def create_account(username, password):
+    con = sqlite3.connect('pssearch/accounts.db')
+    cur = con.cursor()
+    cur.execute(""" INSERT INTO accounts ("username", "password")
+            VALUES (?, ?)""", (username, generate_password_hash(password)))
+    con.commit()
+    con.close()
+
+def check_account(username, password):
+    con = sqlite3.connect('pssearch/accounts.db')
+    cur = con.cursor()
+    cur.execute(""" SELECT * FROM accounts WHERE
+            "username"=?""", (username, ))
+    account = cur.fetchone()
+    con.close()
+
+    if account and check_password_hash(account[2], password):
+        return True
+    else:
+        return False
+
 @app.route('/', methods=['GET'])
 def index_get():
     if 'user' in request.args:
@@ -52,15 +75,17 @@ def index_get():
             wep_list = get_all_wep_acc(char.c_id)
             return render_template('index.html', char=char, wep_list=wep_list)
         else:
-            return render_template('index.html', status="usernotfound")
+            return render_template('index.html', status="characternotfound")
     return render_template('index.html')
 
 
 @app.route('/', methods=['POST'])
 def index_post():
-    print(request.referrer)
-    session.update(user = ((request.form.get('login-user')), request.form.get('login-password')))
-    return redirect(request.referrer)
+    if check_account(request.form.get('login-user'), request.form.get('login-password')):
+        session.update(user = ((request.form.get('login-user')), request.form.get('login-password')))
+        return redirect(request.referrer)
+    else:
+        return render_template('index.html', status='accountnotfoundorwrongpassword')
 
 # temp
 @app.route('/logout', methods=['POST'])
@@ -74,10 +99,5 @@ def signup_get():
 
 @app.route('/signup', methods=['POST'])
 def signup_post():
-    connection = sqlite3.connect('pssearch/accounts.db')
-    cursor = connection.cursor()
-    cursor.execute("""INSERT INTO accounts ("username", "password") VALUES (?, ?)""", (request.form['user'], generate_password_hash(request.form['password'])))
-    connection.commit()
-    connection.close()
-    print(request.form)
-    return render_template('signup.html')
+    create_account(request.form['user'], request.form['password'])
+    return render_template('index.html')
