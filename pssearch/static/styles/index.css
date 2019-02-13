@@ -35,6 +35,12 @@
 	width: 100px;
 }
 
+}
+
+#top #user-session-form label {
+	font-size: 18px;
+}
+
 #search {
 	font-size: 24px;
 	font-weight: bold;

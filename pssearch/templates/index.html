@@ -9,8 +9,9 @@
 		<input type="submit" value="Search">
 	</form>
 	{% else %}
-	<p>{{ session['user'][0] }}</p>
-	<a href="/logout">Log out</a>
+	<form id="user-session-form" action="/logout" method="post">
+		<label for="user-session">Logged in as: {{ session['user'][0] }}</label><input type="submit" name="logout" value="Log out">
+	</form>
 	{% endif %}
 
 </div>

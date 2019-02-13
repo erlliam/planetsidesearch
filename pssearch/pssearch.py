@@ -44,6 +44,7 @@ def get_all_wep_acc(char_id):
 @app.route('/', methods=['GET'])
 def index_get():
     if 'user' in request.args:
+        print(request.referrer)
         char_res = search_character(request.args['user'])
         if char_res:
             char = char_res
@@ -56,11 +57,12 @@ def index_get():
 
 @app.route('/', methods=['POST'])
 def index_post():
+    print(request.referrer)
     session.update(user = ((request.form.get('login-user')), request.form.get('login-password')))
-    return redirect(url_for('index_get'))
+    return redirect(request.referrer)
 
 # temp
-@app.route('/logout')
+@app.route('/logout', methods=['POST'])
 def logout():
     session.clear()
-    return redirect(url_for('index_get'))
+    return redirect(request.referrer)
