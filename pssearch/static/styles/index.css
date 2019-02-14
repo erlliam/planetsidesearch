@@ -41,17 +41,38 @@
 	font-size: 18px;
 }
 
+#ihatecss {
+	text-align: center;
+	margin: 20px;
+}
+
+#middle {
+	display: inline-block;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 20px;
+	text-align: center;
+	padding: 20px;
+}
+
 #search {
 	font-size: 24px;
 	font-weight: bold;
-	display: block;
-	text-align: center;
-	margin: 20px 0 20px 0;
 }
 
 #search-results {
+	margin-top: 10px;
+}
+
+#rllyhate {
 	text-align: center;
 }
 
 #search-list {
+	display: inline-block;
+}
+
+#search-list table{
+	text-align: center;
+	font-size: 20px;
 }

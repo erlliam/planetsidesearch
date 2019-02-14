@@ -15,7 +15,7 @@
 	{% endif %}
 
 </div>
-
+<div id="ihatecss">
 <div id="middle">
 	<form id="search">
 		<label for="search">Character Name: </label><input type="text" name="user"
@@ -32,13 +32,11 @@
 	</div>
 	{% endif %}
 
-	{% if status %}
-		<p>{{ status }}</p>
-	{% endif %}
 
 </div>
-
+</div>
 {% if char %}
+<div id="rllyhate">
 <div id="search-list">
 	<table>
 		<tr>
@@ -54,5 +52,9 @@
 
 	</table>
 </div>
+</div>
 {% endif %}
 
+	{% if status %}
+		<p>{{ status }}</p>
+	{% endif %}
