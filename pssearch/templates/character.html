@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	Characters
+{% endblock %}
+
+{% block content %}
+	<div id="search">
+		<form>
+			<label for="name">Character Name: </label>
+			<input type="text" id="name" name="name"{% if char %} value="{{ char.name }}"{% endif %}> 
+		</form>
+	</div>
+	{% if char %}
+	<div id="search-results">
+		<p>{{ char.name }}</p>
+		<p>{{ char.c_id }}</p>
+		<p>{{ char.fac }}</p>
+	</div>
+	{% endif %}
+{% endblock %}

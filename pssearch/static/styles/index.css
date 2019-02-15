@@ -4,24 +4,6 @@
 	font-family: Arial;
 }
 
-#top {
-	width: 100%;
-	text-align: center;
-	padding: 20px 0 20px 0;
-	border-width: 1px;
-	border-bottom-style: solid;
-
-}
-
-#top #title{
-	text-decoration: none;
-	color: black;
-	height: 36px;
-	font-size: 32px;
-	font-weight: bold;
-	display: inline-block;
-}
-
 #top form {
 	height: 36px;
 	line-height: 36px;

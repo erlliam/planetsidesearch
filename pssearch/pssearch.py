@@ -63,6 +63,23 @@ def check_account(username, password):
     else:
         return False
 
+@app.route('/')
+def index():
+    return render_template('index.html') 
+
+@app.route('/character/')
+def character():
+    if 'name' in request.args:
+        char_search = search_character(request.args['name'])
+        if char_search:
+            return render_template('character.html', char=char_search)
+    return render_template('character.html')
+
+@app.route('/account/')
+def account():
+    return render_template('account.html')
+'''
+
 @app.route('/', methods=['GET'])
 def index_get():
     if 'user' in request.args:
@@ -99,3 +116,4 @@ def signup_get():
 def signup_post():
     create_account(request.form['user'], request.form['password'])
     return render_template('index.html')
+'''

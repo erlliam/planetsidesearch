@@ -1,0 +1,41 @@
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}">
+
+<div id="top">
+	<a id="title" href="/">PLANETSIDE SEARCH</a>
+	{% if not 'user' in session %}
+	<form method="post">
+		<label for="user">User: </label><input type="text" name="login-user">
+		<label for="password">Password: </label><input type="password" name="login-password">
+		<input type="submit" value="Search">
+	</form>
+	{% else %}
+	<form id="user-session-form" action="/logout" method="post">
+		<label for="user-session">Logged in as: {{ session['user'][0] }}</label><input type="submit" name="logout" value="Log out">
+	</form>
+	{% endif %}
+
+</div>
+
+{% if char %}
+<div id="rllyhate">
+<div id="search-list">
+	<table>
+		<tr>
+			<th>Weapon</th>
+			<th>Accuracy</th>
+		</tr>
+		{% for key, value in wep_list.items() %}
+		<tr>
+			<td>{{ '{}'.format(value[0]) }}</td>
+			<td>{{ '{:0>7.3%}'.format(value[2]|int / value[1]|int) }}</td>
+		</tr>
+		{% endfor %}
+
+	</table>
+</div>
+</div>
+{% endif %}
+
+	{% if status %}
+		<p>{{ status }}</p>
+	{% endif %}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	{% block head %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+	<title>{% block title %}{% endblock %} - Planetside Search</title>
+	{% endblock %}
+</head>
+<body>
+	<header>
+		<a href="/">PLANETSIDE SEARCH</a>
+	</header>
+	<nav>
+		<ul>
+			<li><a href="/character/">Character</a></li>
+			<li><a href="/account/">Accounts</a></li>
+			<li><a href="/outfit">Outfit Live Tracking</a></li>
+			<li><a href="/elo">Elo</a></li>
+		</ul>
+	</nav>
+
+	<div id="content">{% block content %}{% endblock %}</div>
+
+	<footer>
+		<p>Created by Tommejas</p>
+		<a href="https://github.com/tommejas">Github</a>
+	</footer>
+</body>
