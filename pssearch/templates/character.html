@@ -5,17 +5,38 @@
 {% endblock %}
 
 {% block content %}
-	<div id="search">
-		<form>
-			<label for="name">Character Name: </label>
-			<input type="text" id="name" name="name"{% if char %} value="{{ char.name }}"{% endif %}> 
-		</form>
+	<div id="character">
+		<div id="search">
+			<form>
+				<label for="name">Character Name: </label>
+				<input type="text" id="name" name="name" value="{{ request.args.name }}"> 
+			</form>
+		</div>
+		{% if char %}
+		<div id="search-results">
+			<p id="name">{{ char.name }}</p>
+			<p id="id">{{ char.c_id }}</p>
+			<p id="faction">{{ char.fac }}</p>
+		</div>
+		<script>
+			let character = document.getElementById("character");
+			let search = document.getElementById("search");
+			let faction = document.getElementById("faction").innerHTML;
+			search.style.paddingBottom = "0px";
+			if (faction === "VS") {
+				character.style.backgroundColor = "purple"
+			} else if (faction === "NC") {
+				character.style.backgroundColor = "blue"
+			} else if (faction === "TR") {
+				character.style.backgroundColor = "red"
+			}
+		</script>
+		{% elif request.args.name %}
+		<p id="search-fail">Not found</p>
+		<script>
+			let search = document.getElementById("search");
+			search.style.paddingBottom = "0px";
+		</script>
+		{% endif %}
 	</div>
-	{% if char %}
-	<div id="search-results">
-		<p>{{ char.name }}</p>
-		<p>{{ char.c_id }}</p>
-		<p>{{ char.fac }}</p>
-	</div>
-	{% endif %}
 {% endblock %}

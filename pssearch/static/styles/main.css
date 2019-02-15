@@ -4,6 +4,8 @@
 	font-family: Arial;
 }
 
+/* base.html */
+
 header {
 	text-align: center;
 	padding: 20px 0;
@@ -53,4 +55,24 @@ footer {
 	padding: 10px 0;
 }
 
+/* character.html */
 
+#character {
+	text-align: center;
+	font-size: 18px;
+	color: white;
+	background-color: grey;
+}
+
+#character #search {
+	padding: 20px 0;
+
+}
+
+#character #search-results {
+	padding: 10px 0;
+}
+
+#character #search-fail {
+	padding: 10px 0;
+}

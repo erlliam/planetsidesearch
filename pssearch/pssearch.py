@@ -79,21 +79,6 @@ def character():
 def account():
     return render_template('account.html')
 '''
-
-@app.route('/', methods=['GET'])
-def index_get():
-    if 'user' in request.args:
-        print(request.referrer)
-        char_res = search_character(request.args['user'])
-        if char_res:
-            char = char_res
-            wep_list = get_all_wep_acc(char.c_id)
-            return render_template('index.html', char=char, wep_list=wep_list)
-        else:
-            return render_template('index.html', status="characternotfound")
-    return render_template('index.html')
-
-
 @app.route('/', methods=['POST'])
 def index_post():
     if check_account(request.form.get('login-user'), request.form.get('login-password')):
