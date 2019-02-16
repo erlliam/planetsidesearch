@@ -1,4 +1,4 @@
-import urllib.request, json, sqlite3
+import urllib.request, json, sqlite3, os
 from flask import Flask, render_template, request, session, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -43,7 +43,7 @@ def get_all_wep_acc(char_id):
         return wep_dict
 
 def create_account(username, password):
-    con = sqlite3.connect('pssearch/accounts.db')
+    con = sqlite3.connect(os.path.join(app.root_path, 'static/accounts.db'))
     cur = con.cursor()
     cur.execute(""" INSERT INTO accounts ("username", "password")
             VALUES (?, ?)""", (username, generate_password_hash(password)))
@@ -51,7 +51,7 @@ def create_account(username, password):
     con.close()
 
 def check_account(username, password):
-    con = sqlite3.connect('pssearch/accounts.db')
+    con = sqlite3.connect(os.path.join(app.root_path, 'static/accounts.db'))
     cur = con.cursor()
     cur.execute(""" SELECT * FROM accounts WHERE
             "username"=?""", (username, ))
@@ -63,22 +63,40 @@ def check_account(username, password):
     else:
         return False
 
+'static/accounts.db'
+
 @app.route('/')
 def index():
+    print(session)
     return render_template('index.html') 
 
 @app.route('/character/')
 def character():
     if 'name' in request.args:
-        char_search = search_character(request.args['name'])
+        char_search = search_character(request.args.get('name'))
         if char_search:
             return render_template('character.html', char=char_search)
     return render_template('character.html')
 
-@app.route('/account/')
-def account():
+@app.route('/account/', methods=['GET'])
+def account_get():
     return render_template('account.html')
+
+@app.route('/account/', methods=['POST'])
+def account_post():
+    if 'sign-up' in request.form:
+        create_account(request.form.get('sign-up-user'), request.form.get('sign-up-password'))
+        session.update(user = request.form.get('sign-up-user'))
+    if 'log-in' in request.form:
+        if check_account(request.form.get('log-in-user'), request.form.get('log-in-password')):
+            session.update(user = request.form.get('log-in-user'))
+    if 'log-out' in request.form:
+        session.clear()
+    return render_template('account.html')
+
+
 '''
+
 @app.route('/', methods=['POST'])
 def index_post():
     if check_account(request.form.get('login-user'), request.form.get('login-password')):
@@ -101,4 +119,5 @@ def signup_get():
 def signup_post():
     create_account(request.form['user'], request.form['password'])
     return render_template('index.html')
+
 '''

@@ -5,5 +5,33 @@
 {% endblock %}
 
 {% block content %}
-
+	{% if not 'user' in session %}
+		<div id="sign-up">
+			<p>Sign up</p>
+			<form method="post">
+				<label for="sign-up-user">Username: </label>
+				<input type="text" name="sign-up-user" id="sign-up-user">
+				<label for="sign-up-password">Password: </label>
+				<input type="password" name="sign-up-password" id="sign-up-password">
+				<input type="submit" value="Sign up" name="sign-up">
+			</form>
+		</div>
+		<div id="log-in">
+			<p>Log in</p>
+			<form method="post">
+				<label for="log-in-user">Username: </label>
+				<input type="text" name="log-in-user" id="log-in-user">
+				<label for="log-in-password">Password: </label>
+				<input type="password" name="log-in-password" id="log-in-password">
+				<input type="submit" value="Log in" name="log-in">
+			</form>
+		</div>
+	{% elif 'user' in session %}
+		<div id="log-out">
+			<form method="post">
+				<label for="log-out">Logged in as: {{ session.user }}</label>
+				<input type="submit" id="log-out" name="log-out" value="Log out">
+			</form>
+		</div>
+	{% endif %}
 {% endblock %}

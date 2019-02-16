@@ -76,3 +76,38 @@ footer {
 #character #search-fail {
 	padding: 10px 0;
 }
+
+/* account.html */
+
+#sign-up {
+	text-align: center;
+	padding-top: 20px;
+	font-size: 18px;
+}
+
+#sign-up p {
+	font-size: 24px;
+	font-weight: bold;
+	padding-bottom: 10px;
+}
+
+#log-in {
+	text-align: center;
+	padding: 10px 0 20px;
+	font-size: 18px;
+}
+
+#log-in p {
+	font-size: 24px;
+	font-weight: bold;
+	padding-bottom: 10px;
+}
+
+#log-out {
+	text-align: center;
+	font-size: 18px;
+}
+
+#log-out form {
+	padding: 20px 0;
+}
