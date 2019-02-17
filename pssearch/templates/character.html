@@ -34,9 +34,6 @@
 				character.style.backgroundColor = "red"
 			}
 		</script>
-		<div id=weapons>
-
-		</div>
 		{% elif request.args.name %}
 		<p id="search-fail">Not found</p>
 		<script>
@@ -44,5 +41,11 @@
 			search.style.paddingBottom = "0px";
 		</script>
 		{% endif %}
+	</div>
+	<div id=weapons>
+		{% for gun in char.guns %}
+			<p>{{ gun.name }}</p>
+		{% endfor %}
+
 	</div>
 {% endblock %}
