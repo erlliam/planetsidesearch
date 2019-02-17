@@ -15,8 +15,11 @@
 		{% if char %}
 		<div id="search-results">
 			<p id="name">{{ char.name }}</p>
-			<p id="id">{{ char.c_id }}</p>
+			<p id="id">{{ char.cid }}</p>
 			<p id="faction">{{ char.fac }}</p>
+			<p id="time">{{ char.time|int/60 }} hours played</p>
+			<p id="rank">Rank: {{ char.rank }}</p>
+			<p id="pres">Prestige: {{ char.pres }}</p>
 		</div>
 		<script>
 			let character = document.getElementById("character");
@@ -31,6 +34,9 @@
 				character.style.backgroundColor = "red"
 			}
 		</script>
+		<div id=weapons>
+
+		</div>
 		{% elif request.args.name %}
 		<p id="search-fail">Not found</p>
 		<script>

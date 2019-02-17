@@ -2,3 +2,4 @@ env/
 pssearch/__pycache__/
 *.pyc
 *.swp
+accounts.db
