@@ -17,7 +17,7 @@
 			<p id="name">{{ char.name }}</p>
 			<p id="id">{{ char.cid }}</p>
 			<p id="faction">{{ char.fac }}</p>
-			<p id="time">{{ char.time|int/60 }} hours played</p>
+			<p id="time">{{ '{:0.1f}'.format(char.time|int / 60) }} hours played</p>
 			<p id="rank">Rank: {{ char.rank }}</p>
 			<p id="pres">Prestige: {{ char.pres }}</p>
 		</div>
@@ -42,10 +42,30 @@
 		</script>
 		{% endif %}
 	</div>
-	<div id=weapons>
-		{% for gun in char.guns %}
-			<p>{{ gun.name }}</p>
-		{% endfor %}
+	{% if char %}
+	<div id="session">
+		<a>startsessui</a>
 
 	</div>
+	<div id="weapons">
+		<table>
+			<tr>
+				<th>Name</th>
+				<th>Kills</th>
+				<th>Deaths</th>
+				<th>Accuracy</th>
+				<th>HSR</th>
+			</tr>
+		{% for gun in char.guns %}
+			<tr>
+				<td>{{ gun.name }}</td>
+				<td>{{ gun.kills }}</td>
+				<td>{{ gun.deaths }}</td>
+				<td>{{ '{:0>6.2%}'.format(gun.landed|int / gun.fired|int) }}</td>
+				<td>{{ '{:0>6.2%}'.format(gun.headshots|int / gun.kills|int) }}</td>
+			</tr>
+		{% endfor %}
+		</table>
+	</div>
+	{% endif %}
 {% endblock %}

@@ -77,6 +77,23 @@ footer {
 	padding: 10px 0;
 }
 
+#session {
+	border-top: thin black solid;
+}
+
+#weapons {
+	border-top: thin black solid;
+}
+
+#weapons table {
+	margin: 0 auto;
+}
+
+#weapons table th, td {
+	text-align: center;
+	padding: 10px;
+}
+
 /* account.html */
 
 #sign-up {
