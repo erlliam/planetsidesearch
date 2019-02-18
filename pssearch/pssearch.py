@@ -66,3 +66,11 @@ def account_post():
         session.clear()
         result = 'loggedout'
     return render_template('account.html', result=result)
+
+@app.route('/outfit/')
+def outfit():
+    return render_template('outfit.html')
+
+@app.route('/elo/')
+def elo():
+    return render_template('elo.html')
