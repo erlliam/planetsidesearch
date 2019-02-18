@@ -49,17 +49,20 @@ def account_get():
 
 @app.route('/account/', methods=['POST'])
 def account_post():
+    result = ''
     if 'sign-up' in request.form:
         try:
             create_account(request.form.get('sign-up-user'), request.form.get('sign-up-password'))
             session.update(user = request.form.get('sign-up-user'))
+            result = 'account created, logged in'
         except sqlite3.IntegrityError:
-            return 'nametaken'
-    if 'log-in' in request.form:
+            result = 'nametaken'
+    elif 'log-in' in request.form:
         if check_account(request.form.get('log-in-user'), request.form.get('log-in-password')):
             session.update(user = request.form.get('log-in-user'))
         else:
-            return 'loginfail'
-    if 'log-out' in request.form:
+            result = 'loginfail'
+    elif 'log-out' in request.form:
         session.clear()
-    return render_template('account.html')
+        result = 'loggedout'
+    return render_template('account.html', result=result)
