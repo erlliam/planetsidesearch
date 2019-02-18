@@ -1,7 +1,6 @@
 import urllib.request, json, sqlite3, os
 from flask import Flask, render_template, request, session, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
-
 import char_search
 
 app = Flask(__name__)
@@ -32,7 +31,6 @@ def check_account(username, password):
 
 @app.route('/')
 def index():
-    print(session)
     return render_template('index.html') 
 
 @app.route('/character/')
@@ -74,3 +72,6 @@ def outfit():
 @app.route('/elo/')
 def elo():
     return render_template('elo.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
