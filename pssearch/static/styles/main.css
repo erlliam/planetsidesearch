@@ -55,6 +55,14 @@ footer {
 	padding: 10px 0;
 }
 
+/* index.html */
+
+#index-paragraph {
+	width: 80%;
+	margin: 0 auto;
+	padding: 20px 0;
+}
+
 /* character.html */
 
 #character {

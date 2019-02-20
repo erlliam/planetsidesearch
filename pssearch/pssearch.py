@@ -72,6 +72,3 @@ def outfit():
 @app.route('/elo/')
 def elo():
     return render_template('elo.html')
-
-if __name__ == '__main__':
-    app.run(debug=True)
