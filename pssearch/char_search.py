@@ -64,7 +64,6 @@ def get_char_with_guns(name):
         return False
     elif not len(j['character_list']):
         return False
-    print(j)
     r = j['character_list'][0]
 
     if not 'wep_kill' in r or not 'wep_acc' in r:

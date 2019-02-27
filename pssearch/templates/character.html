@@ -15,7 +15,7 @@
 		{% if char %}
 		<div id="search-results">
 			<p id="name">{{ char.name }}</p>
-			<p id="id">{{ char.cid }}</p>
+			<p id="char-id">{{ char.cid }}</p>
 			<p id="faction">{{ char.fac }}</p>
 			<p id="time">{{ '{:0.1f}'.format(char.time|int / 60) }} hours played</p>
 			<p id="rank">Rank: {{ char.rank }}</p>
@@ -44,12 +44,8 @@
 	</div>
 	{% if char %}
 	<div id="session">
-		<form method="get" action="/character/">
-			<input type="reset" value="start session">
-		</form>
-		
+		<button id="session-button">Start session</button>
 		<script src="{{ url_for('static', filename='session.js') }}"></script>
-
 	</div>
 	<div id="weapons">
 		<table>
