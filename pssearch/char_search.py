@@ -62,8 +62,11 @@ def get_char_with_guns(name):
 
     if not j['returned']:
         return False
-
+    elif not len(j['character_list']):
+        return False
+    print(j)
     r = j['character_list'][0]
+
     if not 'wep_kill' in r or not 'wep_acc' in r:
         return False # fixes if gun is shot and no bullets landed??
     k = r['wep_kill']
