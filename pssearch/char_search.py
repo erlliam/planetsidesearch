@@ -114,3 +114,5 @@ def get_char_with_guns(name):
 
     c.set_guns(g)
     return c
+
+
