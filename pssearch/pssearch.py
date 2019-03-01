@@ -1,5 +1,5 @@
 import urllib.request, json
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, jsonify
 import char_search, database
 
 app = Flask(__name__)
@@ -16,6 +16,11 @@ def character():
         if char:
             return render_template('character.html', char=char)
     return render_template('character.html')
+
+@app.route('/id_to_name')
+def get_name():
+    return jsonify(name = char_search.id_to_name(request.args['id']))
+
 
 @app.route('/account/', methods=['GET'])
 def account_get():

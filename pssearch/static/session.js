@@ -3,6 +3,20 @@ let webSocket;
 
 button.addEventListener("click", startSession);
 
+function idToName(num) {
+	xhttp = new XMLHttpRequest();
+	
+	xhttp.open("GET", "/id_to_name?id=" + num);
+	xhttp.send();
+	xhttp.onreadystatechange = function () {
+		console.log(this.status);
+		if (this.status == 200) {
+			omfg = JSON.parse(this.responseText);
+			console.log("wtf bor", omfg.name);
+		}
+	}
+}
+
 function startSession() {
 	button.removeEventListener("click", startSession);
 	button.addEventListener("click", endSession);
@@ -17,17 +31,19 @@ function startSession() {
 	};
 	webSocket.onopen = function (event) {
 		webSocket.send(JSON.stringify(command));
-		let kills = 0;
-		let deaths = 0;
+		let kills = [];
+		let deaths = [];
 
 		webSocket.onmessage = function (event) {
 			let message = JSON.parse(event.data);
 			if (message.hasOwnProperty("payload")) {
 				let payload = message.payload;
 				if (payload.attacker_character_id == characterId) { // kill
-					kills = kills + 1;
+					console.log("kill");
+					kills.push(idToName(payload.character_id));
 				} else if (payload.attacker_character_id != characterId) { // death
-					deaths = deaths + 1;
+					console.log("die");
+					deaths.push(idToName(payload.attacker_character_id));
 				}
 				console.log(kills, deaths);
 			}

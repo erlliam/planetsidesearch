@@ -2,6 +2,8 @@ import urllib.request, json
 
 url = """http://census.daybreakgames.com/s:supafarma/get/ps2/character/?name.first_lower={}&c:show=character_id,name.first,faction_id,times.minutes_played,battle_rank.value,prestige_level&c:join=faction^inject_at:faction_id^show:code_tag&c:join=characters_weapon_stat^inject_at:wep_acc^terms:vehicle_id=0%27stat_name=weapon_deaths%27stat_name=weapon_fire_count%27stat_name=weapon_hit_count^show:item_id%27stat_name%27value^list:1^outer:0(item^show:name.en^inject_at:gun_name)&c:tree=start:wep_acc^field:item_id,stat_name^list:1&c:join=characters_weapon_stat_by_faction^inject_at:wep_kill^terms:vehicle_id=0%27stat_name=weapon_headshots%27stat_name=weapon_kills^show:item_id%27stat_name%27value_vs%27value_nc%27value_tr^list:1(item^show:name.en^inject_at:gun_name)&c:tree=start:wep_kill^field:item_id,stat_name^list:1"""
 
+id_to_name_url = """http://census.daybreakgames.com/s:supafarma/get/ps2/character/?character_id={}&c:show=name.first"""
+
 """
 u = url
 j = json
@@ -36,6 +38,15 @@ class Gun:
         self.deaths = d['weapon_deaths']
         self.fired = d['weapon_fire_count']
         self.landed = d['weapon_hit_count']
+
+def id_to_name(cid):
+    try:
+        u = urllib.request.urlopen(id_to_name_url.format(cid))
+        j = json.load(u)
+        print(j['character_list'][0]['name']['first'])
+        return j['character_list'][0]['name']['first']
+    except:
+        pass # for some reason this function so this is to solve the random execution
 
 def get_char(name):
     u = urllib.request.urlopen(url.format(name.lower()))
@@ -99,7 +110,10 @@ def get_char_with_guns(name):
             f[item_id] = {}
         for stat_name, result in values.items():
             if not 'name' in f[item_id]:
-                f[item_id]['name'] = result[0]['gun_name']['name']['en']
+                try:
+                    f[item_id]['name'] = result[0]['gun_name']['name']['en']
+                except:
+                    pass #extreme lazy bug fixing...
             f[item_id].update({stat_name: result[0]['value']})
 
     for i, v in f.copy().items():
