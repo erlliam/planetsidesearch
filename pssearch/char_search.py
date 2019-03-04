@@ -43,7 +43,6 @@ def id_to_name(cid):
     try:
         u = urllib.request.urlopen(id_to_name_url.format(cid))
         j = json.load(u)
-        print(j['character_list'][0]['name']['first'])
         return j['character_list'][0]['name']['first']
     except:
         pass # for some reason this function so this is to solve the random execution
